@@ -3,9 +3,19 @@ import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { Separator } from '@/components/ui/separator';
 import Icon from '@/components/ui/icon';
+import { GalleryModal } from '@/components/GalleryModal';
+
+interface GalleryImage {
+  image: string;
+  title: string;
+  description: string;
+}
 
 const Index = () => {
   const [activeSection, setActiveSection] = useState('home');
+  const [modalOpen, setModalOpen] = useState(false);
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const [currentGallery, setCurrentGallery] = useState<GalleryImage[]>([]);
 
   const scrollToSection = (sectionId: string) => {
     setActiveSection(sectionId);
@@ -23,6 +33,65 @@ const Index = () => {
     { id: 'contact', label: 'Контакты' },
   ];
 
+  const paintingWorks = [
+    {
+      image: 'https://cdn.poehali.dev/projects/20c87400-0867-484e-8a18-ba702b96b896/files/f9cd8fc4-4443-4760-b82e-aa73c4e4d997.jpg',
+      title: 'Пейзаж',
+      description: 'Масло, холст, 60x80 см',
+    },
+    {
+      image: 'https://cdn.poehali.dev/projects/20c87400-0867-484e-8a18-ba702b96b896/files/40c7bf34-994e-4eb8-b9f0-09c3081b5ac5.jpg',
+      title: 'Портрет',
+      description: 'Масло, холст, 50x70 см',
+    },
+    {
+      image: 'https://cdn.poehali.dev/projects/20c87400-0867-484e-8a18-ba702b96b896/files/de689c68-c429-4cc1-ac40-d28ecb106d68.jpg',
+      title: 'Цветы',
+      description: 'Акварель, бумага, 40x50 см',
+    },
+    {
+      image: 'https://cdn.poehali.dev/projects/20c87400-0867-484e-8a18-ba702b96b896/files/273b7e13-8dfd-4760-98e1-62ad74a25018.jpg',
+      title: 'Абстракция',
+      description: 'Масло, холст, 70x90 см',
+    },
+  ];
+
+  const leatherWorks = [
+    {
+      image: 'https://cdn.poehali.dev/projects/20c87400-0867-484e-8a18-ba702b96b896/files/39de0bb4-38c0-42f4-b508-fa192eefe962.jpg',
+      title: 'Кожаный кошелек',
+      description: 'Натуральная кожа, ручная работа',
+    },
+    {
+      image: 'https://cdn.poehali.dev/projects/20c87400-0867-484e-8a18-ba702b96b896/files/b2452710-b117-4cc2-a6f0-b9496111445d.jpg',
+      title: 'Сумка',
+      description: 'Натуральная кожа, авторский дизайн',
+    },
+    {
+      image: 'https://cdn.poehali.dev/projects/20c87400-0867-484e-8a18-ba702b96b896/files/806320e9-03ad-4fcc-8d78-118798be81ba.jpg',
+      title: 'Аксессуары',
+      description: 'Брелок и браслет из натуральной кожи',
+    },
+  ];
+
+  const muralWorks = [
+    {
+      image: 'https://cdn.poehali.dev/projects/20c87400-0867-484e-8a18-ba702b96b896/files/9a6665c2-d749-4231-ac57-bc6ba3d99009.jpg',
+      title: 'Роспись гостиной',
+      description: 'Художественная роспись стены в жилом интерьере',
+    },
+    {
+      image: 'https://cdn.poehali.dev/projects/20c87400-0867-484e-8a18-ba702b96b896/files/4e2e6f5d-0107-49d9-8b2d-b303e0c8a1b1.jpg',
+      title: 'Детская комната',
+      description: 'Яркая роспись стен в детской',
+    },
+    {
+      image: 'https://cdn.poehali.dev/projects/20c87400-0867-484e-8a18-ba702b96b896/files/646b3685-0a62-4118-a2a1-4b2211070049.jpg',
+      title: 'Ресторан',
+      description: 'Декоративное панно для ресторана',
+    },
+  ];
+
   const portfolioItems = [
     {
       id: 'painting',
@@ -30,6 +99,7 @@ const Index = () => {
       description: 'Профессиональная живопись маслом, акварелью и другими техниками. Создание уникальных произведений искусства.',
       image: 'https://cdn.poehali.dev/projects/20c87400-0867-484e-8a18-ba702b96b896/files/27064110-59e6-4125-906b-81bf4df26439.jpg',
       icon: 'Palette',
+      works: paintingWorks,
     },
     {
       id: 'leather',
@@ -37,6 +107,7 @@ const Index = () => {
       description: 'Изготовление изделий из натуральной кожи ручной работы. Авторские аксессуары и декоративные элементы.',
       image: 'https://cdn.poehali.dev/projects/20c87400-0867-484e-8a18-ba702b96b896/files/6b7b76e0-623f-474e-b56d-0e1eab1b6bde.jpg',
       icon: 'Scissors',
+      works: leatherWorks,
     },
     {
       id: 'murals',
@@ -44,8 +115,23 @@ const Index = () => {
       description: 'Художественная роспись стен на заказ. Фрески, декоративные панно и уникальные интерьерные решения.',
       image: 'https://cdn.poehali.dev/projects/20c87400-0867-484e-8a18-ba702b96b896/files/9f15b8f5-db26-4050-8b4f-7efe743e6248.jpg',
       icon: 'Paintbrush',
+      works: muralWorks,
     },
   ];
+
+  const openGallery = (works: GalleryImage[], index: number) => {
+    setCurrentGallery(works);
+    setCurrentImageIndex(index);
+    setModalOpen(true);
+  };
+
+  const nextImage = () => {
+    setCurrentImageIndex((prev) => (prev + 1) % currentGallery.length);
+  };
+
+  const prevImage = () => {
+    setCurrentImageIndex((prev) => (prev - 1 + currentGallery.length) % currentGallery.length);
+  };
 
   return (
     <div className="min-h-screen bg-background">
@@ -146,30 +232,28 @@ const Index = () => {
 
         <section id="painting" className="py-20 px-4 bg-muted/30">
           <div className="container mx-auto">
-            <h2 className="text-5xl font-bold text-center mb-16">Мои работы</h2>
-            <div className="grid md:grid-cols-3 gap-8">
-              {portfolioItems.map((item, index) => (
+            <h2 className="text-5xl font-bold text-center mb-8">Живопись</h2>
+            <p className="text-xl text-center text-muted-foreground mb-12">
+              Профессиональная живопись маслом, акварелью и другими техниками
+            </p>
+            <div className="grid md:grid-cols-4 gap-6">
+              {paintingWorks.map((work, index) => (
                 <Card
-                  key={item.id}
-                  className="overflow-hidden group hover:shadow-xl transition-all duration-300 animate-fade-in"
-                  style={{ animationDelay: `${index * 150}ms` }}
+                  key={work.title}
+                  className="overflow-hidden group cursor-pointer hover:shadow-xl transition-all duration-300 animate-fade-in"
+                  style={{ animationDelay: `${index * 100}ms` }}
+                  onClick={() => openGallery(paintingWorks, index)}
                 >
-                  <div className="aspect-[4/3] overflow-hidden">
+                  <div className="aspect-square overflow-hidden">
                     <img
-                      src={item.image}
-                      alt={item.title}
+                      src={work.image}
+                      alt={work.title}
                       className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                     />
                   </div>
-                  <div className="p-6">
-                    <div className="flex items-center gap-3 mb-3">
-                      <Icon name={item.icon as any} size={24} className="text-primary" />
-                      <h3 className="text-2xl font-bold">{item.title}</h3>
-                    </div>
-                    <p className="text-muted-foreground leading-relaxed mb-4">{item.description}</p>
-                    <Button variant="outline" className="w-full">
-                      Подробнее
-                    </Button>
+                  <div className="p-4">
+                    <h3 className="text-lg font-bold mb-1">{work.title}</h3>
+                    <p className="text-sm text-muted-foreground">{work.description}</p>
                   </div>
                 </Card>
               ))}
@@ -178,21 +262,29 @@ const Index = () => {
         </section>
 
         <section id="leather" className="py-20 px-4">
-          <div className="container mx-auto max-w-4xl">
+          <div className="container mx-auto">
             <h2 className="text-5xl font-bold text-center mb-8">Кожаные изделия</h2>
             <p className="text-xl text-center text-muted-foreground mb-12">
               Авторские изделия из натуральной кожи ручной работы
             </p>
-            <div className="grid md:grid-cols-2 gap-6">
-              {['Кошельки', 'Сумки', 'Аксессуары', 'Декоративные элементы'].map((item, index) => (
+            <div className="grid md:grid-cols-3 gap-6">
+              {leatherWorks.map((work, index) => (
                 <Card
-                  key={item}
-                  className="p-6 hover:bg-accent/50 transition-colors animate-scale-in"
+                  key={work.title}
+                  className="overflow-hidden group cursor-pointer hover:shadow-xl transition-all duration-300 animate-fade-in"
                   style={{ animationDelay: `${index * 100}ms` }}
+                  onClick={() => openGallery(leatherWorks, index)}
                 >
-                  <div className="flex items-center gap-4">
-                    <Icon name="Check" className="text-primary" size={24} />
-                    <span className="text-lg font-medium">{item}</span>
+                  <div className="aspect-square overflow-hidden">
+                    <img
+                      src={work.image}
+                      alt={work.title}
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                    />
+                  </div>
+                  <div className="p-4">
+                    <h3 className="text-xl font-bold mb-1">{work.title}</h3>
+                    <p className="text-sm text-muted-foreground">{work.description}</p>
                   </div>
                 </Card>
               ))}
@@ -201,28 +293,31 @@ const Index = () => {
         </section>
 
         <section id="murals" className="py-20 px-4 bg-muted/30">
-          <div className="container mx-auto max-w-4xl">
+          <div className="container mx-auto">
             <h2 className="text-5xl font-bold text-center mb-8">Роспись стен</h2>
             <p className="text-xl text-center text-muted-foreground mb-12">
               Создание уникальных интерьеров через художественную роспись
             </p>
-            <div className="space-y-6">
-              {[
-                'Художественные фрески для дома и офиса',
-                'Декоративные панно любой сложности',
-                'Роспись детских комнат',
-                'Интерьерные решения для кафе и ресторанов',
-              ].map((item, index) => (
-                <div
-                  key={item}
-                  className="flex items-start gap-4 animate-fade-in"
+            <div className="grid md:grid-cols-3 gap-6">
+              {muralWorks.map((work, index) => (
+                <Card
+                  key={work.title}
+                  className="overflow-hidden group cursor-pointer hover:shadow-xl transition-all duration-300 animate-fade-in"
                   style={{ animationDelay: `${index * 100}ms` }}
+                  onClick={() => openGallery(muralWorks, index)}
                 >
-                  <div className="bg-primary/10 p-2 mt-1">
-                    <Icon name="Paintbrush" className="text-primary" size={20} />
+                  <div className="aspect-[4/3] overflow-hidden">
+                    <img
+                      src={work.image}
+                      alt={work.title}
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                    />
                   </div>
-                  <p className="text-lg flex-1">{item}</p>
-                </div>
+                  <div className="p-4">
+                    <h3 className="text-xl font-bold mb-1">{work.title}</h3>
+                    <p className="text-sm text-muted-foreground">{work.description}</p>
+                  </div>
+                </Card>
               ))}
             </div>
           </div>
@@ -268,6 +363,16 @@ const Index = () => {
           <p className="text-sm">© 2024 Портфолио художника. Все права защищены.</p>
         </div>
       </footer>
+
+      <GalleryModal
+        isOpen={modalOpen}
+        onClose={() => setModalOpen(false)}
+        image={currentGallery[currentImageIndex]?.image || ''}
+        title={currentGallery[currentImageIndex]?.title || ''}
+        description={currentGallery[currentImageIndex]?.description}
+        onNext={currentGallery.length > 1 ? nextImage : undefined}
+        onPrev={currentGallery.length > 1 ? prevImage : undefined}
+      />
     </div>
   );
 };
