@@ -165,9 +165,7 @@ const Index = () => {
             <h2 className="text-6xl md:text-8xl font-bold text-primary mb-6">
               Искусство в каждой детали
             </h2>
-            <p className="text-xl md:text-2xl text-muted-foreground max-w-3xl mx-auto mb-12">
-              Профессиональная живопись, изделия из кожи и художественная роспись стен на заказ
-            </p>
+            <p className="text-xl md:text-2xl text-muted-foreground max-w-3xl mx-auto mb-12">Профессиональная живопись, изделия из кожи заказ</p>
             <div className="flex gap-4 justify-center">
               <Button size="lg" onClick={() => scrollToSection('painting')}>
                 Портфолио
