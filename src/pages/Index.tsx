@@ -29,7 +29,6 @@ const Index = () => {
     { id: 'teaching', label: 'Преподавание' },
     { id: 'painting', label: 'Живопись' },
     { id: 'leather', label: 'Кожаные изделия' },
-    { id: 'murals', label: 'Роспись стен' },
     { id: 'contact', label: 'Контакты' },
   ];
 
@@ -74,50 +73,9 @@ const Index = () => {
     },
   ];
 
-  const muralWorks = [
-    {
-      image: 'https://cdn.poehali.dev/projects/20c87400-0867-484e-8a18-ba702b96b896/files/9a6665c2-d749-4231-ac57-bc6ba3d99009.jpg',
-      title: 'Роспись гостиной',
-      description: 'Художественная роспись стены в жилом интерьере',
-    },
-    {
-      image: 'https://cdn.poehali.dev/projects/20c87400-0867-484e-8a18-ba702b96b896/files/4e2e6f5d-0107-49d9-8b2d-b303e0c8a1b1.jpg',
-      title: 'Детская комната',
-      description: 'Яркая роспись стен в детской',
-    },
-    {
-      image: 'https://cdn.poehali.dev/projects/20c87400-0867-484e-8a18-ba702b96b896/files/646b3685-0a62-4118-a2a1-4b2211070049.jpg',
-      title: 'Ресторан',
-      description: 'Декоративное панно для ресторана',
-    },
-  ];
 
-  const portfolioItems = [
-    {
-      id: 'painting',
-      title: 'Живопись',
-      description: 'Профессиональная живопись маслом, акварелью и другими техниками. Создание уникальных произведений искусства.',
-      image: 'https://cdn.poehali.dev/projects/20c87400-0867-484e-8a18-ba702b96b896/files/27064110-59e6-4125-906b-81bf4df26439.jpg',
-      icon: 'Palette',
-      works: paintingWorks,
-    },
-    {
-      id: 'leather',
-      title: 'Кожаные изделия',
-      description: 'Изготовление изделий из натуральной кожи ручной работы. Авторские аксессуары и декоративные элементы.',
-      image: 'https://cdn.poehali.dev/projects/20c87400-0867-484e-8a18-ba702b96b896/files/6b7b76e0-623f-474e-b56d-0e1eab1b6bde.jpg',
-      icon: 'Scissors',
-      works: leatherWorks,
-    },
-    {
-      id: 'murals',
-      title: 'Роспись стен',
-      description: 'Художественная роспись стен на заказ. Фрески, декоративные панно и уникальные интерьерные решения.',
-      image: 'https://cdn.poehali.dev/projects/20c87400-0867-484e-8a18-ba702b96b896/files/9f15b8f5-db26-4050-8b4f-7efe743e6248.jpg',
-      icon: 'Paintbrush',
-      works: muralWorks,
-    },
-  ];
+
+
 
   const openGallery = (works: GalleryImage[], index: number) => {
     setCurrentGallery(works);
@@ -165,7 +123,9 @@ const Index = () => {
             <h2 className="text-6xl md:text-8xl font-bold text-primary mb-6">
               Искусство в каждой детали
             </h2>
-            <p className="text-xl md:text-2xl text-muted-foreground max-w-3xl mx-auto mb-12">Профессиональная живопись, изделия из кожи заказ</p>
+            <p className="text-xl md:text-2xl text-muted-foreground max-w-3xl mx-auto mb-12">
+              Профессиональная живопись и изделия из кожи ручной работы
+            </p>
             <div className="flex gap-4 justify-center">
               <Button size="lg" onClick={() => scrollToSection('painting')}>
                 Портфолио
@@ -290,38 +250,7 @@ const Index = () => {
           </div>
         </section>
 
-        <section id="murals" className="py-20 px-4 bg-muted/30">
-          <div className="container mx-auto">
-            <h2 className="text-5xl font-bold text-center mb-8">Роспись стен</h2>
-            <p className="text-xl text-center text-muted-foreground mb-12">
-              Создание уникальных интерьеров через художественную роспись
-            </p>
-            <div className="grid md:grid-cols-3 gap-6">
-              {muralWorks.map((work, index) => (
-                <Card
-                  key={work.title}
-                  className="overflow-hidden group cursor-pointer hover:shadow-xl transition-all duration-300 animate-fade-in"
-                  style={{ animationDelay: `${index * 100}ms` }}
-                  onClick={() => openGallery(muralWorks, index)}
-                >
-                  <div className="aspect-[4/3] overflow-hidden">
-                    <img
-                      src={work.image}
-                      alt={work.title}
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                    />
-                  </div>
-                  <div className="p-4">
-                    <h3 className="text-xl font-bold mb-1">{work.title}</h3>
-                    <p className="text-sm text-muted-foreground">{work.description}</p>
-                  </div>
-                </Card>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        <section id="contact" className="py-20 px-4">
+        <section id="contact" className="py-20 px-4 bg-muted/30">
           <div className="container mx-auto max-w-2xl">
             <h2 className="text-5xl font-bold text-center mb-12">Контакты</h2>
             <Card className="p-8 md:p-12 animate-scale-in">
